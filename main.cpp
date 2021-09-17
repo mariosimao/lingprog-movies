@@ -214,6 +214,12 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, catalog.toCsv());
                 break;
             }
+            case 4: {
+                Catalog catalog = parseCsv(filename);
+
+                cout << catalog;
+                break;
+            }
             default: {
                 break;
             }

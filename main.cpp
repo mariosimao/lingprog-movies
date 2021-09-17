@@ -260,6 +260,23 @@ int main(int argc, char const *argv[])
                 cout << "Movie successfully renamed." << endl;
                 break;
             }
+            case 8: {
+                if (argc < 5) {
+                    throw runtime_error("Missing arguments. Movie name and new production should be provided.");
+                }
+
+                string name = args[3];
+                string newProduction = args[4];
+
+                Catalog catalog = parseCsv(filename);
+
+                Movie* result = catalog(name, newProduction);
+                if (result == NULL) {
+                    throw runtime_error("Movie not found.");
+                }
+
+                rewriteFile(filename, catalog.toCsv());
+            }
             default: {
                 break;
             }

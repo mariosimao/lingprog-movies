@@ -20,8 +20,9 @@ void checkMovieHasAllProperties(Movie movie)
     }
 }
 
-Catalog::Catalog(size_t catalogSize)
+Catalog::Catalog(string name, size_t catalogSize)
 {
+    _name = name;
     _catalogSize = catalogSize;
 }
 
@@ -65,6 +66,16 @@ Movie* Catalog::bestRatedMovie()
     }
 
     return bestRatedMovie;
+}
+
+string Catalog::toCsv()
+{
+    string content = "meta," + this->_name + "," + to_string(this->_catalogSize) + "\n";
+    for (auto movie: this->_movies) {
+        content += movie.name + "," + movie.production + "," + to_string(movie.rating) + "\n";
+    }
+
+    return content;
 }
 
 void Catalog::operator+=(Movie movie)

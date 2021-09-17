@@ -53,14 +53,16 @@ class Catalog
     /** List all movies */
     friend ostream& operator<<(ostream& out, const Catalog& catalog);
     private:
-        vector<Movie> _movies;
+        string _name;
         size_t _catalogSize;
+        vector<Movie> _movies;
     public:
-        Catalog(size_t catalogSize);
+        Catalog(string name, size_t catalogSize);
         /** Counts how many movies have been registered */
         size_t moviesRegistered();
         Movie* rename(string oldName, string newName);
         Movie* bestRatedMovie();
+        string toCsv();
         /** Add movie */
         void operator+=(Movie movie);
         /** Add multiple movies */

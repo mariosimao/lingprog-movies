@@ -49,6 +49,22 @@ Movie* Catalog::rename(string oldName, string newName)
     return this->operator()(newName);
 }
 
+Movie* Catalog::bestRatedMovie()
+{
+    if (this->moviesRegistered() == 0) {
+        return NULL;
+    }
+
+    Movie* bestRatedMovie = &this->_movies[0];
+    double highestRatring = bestRatedMovie->rating;
+    for (auto movie: this->_movies) {
+        if (movie > highestRatring) {
+            highestRatring = movie.rating;
+            bestRatedMovie = &movie;
+        }
+    }
+
+    return bestRatedMovie;
 }
 
 void Catalog::operator+=(Movie movie)

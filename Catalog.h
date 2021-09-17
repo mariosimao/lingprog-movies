@@ -26,6 +26,11 @@ struct Movie {
         return name > movie.name;
     }
 
+    bool operator>(double comparedRating) const
+    {
+        return rating > comparedRating;
+    }
+
     friend ostream& operator<<(ostream& out, const Movie& movie)
     {
         out << movie.name << endl;
@@ -55,6 +60,7 @@ class Catalog
         /** Counts how many movies have been registered */
         size_t moviesRegistered();
         Movie* rename(string oldName, string newName);
+        Movie* bestRatedMovie();
         /** Add movie */
         void operator+=(Movie movie);
         /** Add multiple movies */

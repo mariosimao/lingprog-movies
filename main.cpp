@@ -234,6 +234,10 @@ int main(int argc, char const *argv[])
                 Catalog catalog = parseCsv(filename);
 
                 Movie* movie = catalog(movieName);
+                if (movie == NULL) {
+                    throw runtime_error("Movie not found.");
+                }
+
                 cout << *movie;
                 break;
             }

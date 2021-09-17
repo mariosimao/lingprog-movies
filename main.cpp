@@ -1,39 +1,155 @@
+#include <algorithm>
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <map>
+#include <string>
+#include <vector>
 #include "Catalog.h"
+
+using namespace std;
+
+vector<vector<string>> readCsv(string filename)
+{
+    vector<vector<string>> result;
+    vector<string> row;
+    string line, word;
+
+    ifstream file(filename);
+    if (!file.is_open()) {
+        throw runtime_error("Could not open file '" + filename + "'");
+    }
+
+    if (!file.good()) {
+        throw runtime_error("Could not read file '" + filename + "'");
+    }
+
+    while (getline(file, line)) {
+        stringstream ss(line);
+
+        row.clear();
+        while (getline(ss, word, ',')) {
+            row.push_back(word);
+        }
+
+        result.push_back(row);
+    }
+
+    file.close();
+
+    return result;
+}
+
+bool isDouble(string numberString)
+{
+    istringstream iss(numberString);
+    double f;
+    iss >> noskipws >> f;
+    return iss.eof() && !iss.fail();
+}
+
+Catalog parseCsv(string filename)
+{
+    vector<vector<string>> data = readCsv(filename);
+    vector<Movie> movies;
+
+    string catalogName = data[0][1];
+    int catalogSize(stoi(data[0][2]));
+    Catalog catalog(catalogName, catalogSize);
+
+    for (size_t i = 1; i < data.size(); i++) {
+        vector<string> row = data[i];
+
+        if (row.size() != 3) {
+            throw runtime_error("Invalid CSV format. Number of columns must be 3.");
+        }
+
+        string name = row[0];
+        if (name == "") {
+            throw runtime_error("A movie must not have an empty name.");
+        }
+
+        string production = row[1];
+        if (name == "") {
+            throw runtime_error("A movie must not have an empty production.");
+        }
+
+        if (!isDouble(row[2])) {
+            throw runtime_error("Rating is not a valid number.");
+        }
+        double rating = stof(row[2]);
+
+        Movie movie = {
+            name,
+            production,
+            rating
+        };
+
+        movies.push_back(movie);
+    }
+
+    catalog += movies;
+
+    return catalog;
+}
 
 int main(int argc, char const *argv[])
 {
-    vector<Movie> movies;
-    Catalog catalog(100);
+    try {
+        vector<string> args(argv, argv + argc);
+        map<string, int> commands = {
+            { "help", 0 },
+            { "create", 1 },
+            { "insert", 2 },
+            { "bulk-insert", 3 },
+            { "list", 4 },
+            { "search", 5 },
+            { "best", 6 },
+            { "rename", 7 },
+            { "update-production", 8 },
+            { "update-rating", 9 },
+            { "delete", 10 }
+        };
 
-    Movie hp = {
-        "Harry Potter",
-        "Warner",
-        8.1
-    };
-    catalog += hp;
+        if (
+            argc <= 1 ||
+            args[1] == "help"
+        ) {
+            cout << "Usage: catalog <catalog-name> <command> [<args>]" << endl;
+            cout << endl;
+            cout << "Available commands:" << endl << endl;
+            cout << "\t" << "help"                                      << "\t\t\t\t\t\t" << "Display this help page" << endl;
+            cout << "\t" << "create <size>"                             << "\t\t\t\t\t"   << "Create a catalog" << endl;
+            cout << "\t" << "insert"                                    << "\t\t\t\t\t\t" << "Insert a single movie" << endl;
+            cout << "\t" << "bulk-insert <amount-of-movies>"            << "\t\t\t"       << "Insert multiple movies" << endl;
+            cout << "\t" << "list"                                      << "\t\t\t\t\t\t" << "List all movies" <<  endl;
+            cout << "\t" << "search <movie-name>"                       << "\t\t\t\t"     << "Search a single movie by name" << endl;
+            cout << "\t" << "best"                                      << "\t\t\t\t\t\t" << "Find the movie with highest rating" << endl;
+            cout << "\t" << "rename <old-name> <new-name>"              << "\t\t\t"       << "Rename a movie" << endl;
+            cout << "\t" << "update-production <name> <new-production>" << "\t"           << "Update a movie production" << endl;
+            cout << "\t" << "update-rating <name> <new-rating>"         << "\t\t"         << "Update a movie rating" << endl;
+            cout << "\t" << "delete <movie-name>"                       << "\t\t\t\t"     << "Remove a movie" << endl;
+            cout << endl;
+            return 0;
+        }
 
-    catalog += Movie {
-        "Amelie",
-        "Francesa",
-        4.2
-    };
+        if (argc < 3) {
+            throw runtime_error("Missing argument. Use 'catalog help' for usage information.");
+        }
 
-    catalog += Movie {
-        "Star Wars",
-        "Disney",
-        6.2
-    };
+        string filename = args[1] + ".csv";
+        string command = args[2];
+        int commandKey = commands.at(command);
+        switch (commandKey) {
+            case 1:
+                // do something
+            default:
+                break;
+        }
 
-    cout << catalog;
-    cout << "---" << endl;
-
-    catalog -= Movie { "Star Wars" };
-
-    cout << catalog;
-
-    Movie* search = catalog("Harry Potter");
-    cout << search;
-
-    return 0;
+        return 0;
+    } catch(const std::exception& e) {
+        std::cerr << e.what() << endl;
+        return 1;
+    }
 }

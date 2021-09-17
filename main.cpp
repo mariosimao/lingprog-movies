@@ -118,15 +118,15 @@ int main(int argc, char const *argv[])
         map<string, int> commands = {
             { "help", 0 },
             { "create", 1 },
-            { "insert", 2 },
-            { "bulk-insert", 3 },
+            { "add", 2 },
+            { "bulk-add", 3 },
             { "list", 4 },
             { "search", 5 },
             { "best", 6 },
             { "rename", 7 },
             { "update-production", 8 },
             { "update-rating", 9 },
-            { "delete", 10 }
+            { "remove", 10 }
         };
 
         if (
@@ -138,15 +138,15 @@ int main(int argc, char const *argv[])
             cout << "Available commands:" << endl << endl;
             cout << "\t" << "help"                                      << "\t\t\t\t\t\t" << "Display this help page" << endl;
             cout << "\t" << "create <size>"                             << "\t\t\t\t\t"   << "Create a catalog" << endl;
-            cout << "\t" << "insert"                                    << "\t\t\t\t\t\t" << "Insert a single movie" << endl;
-            cout << "\t" << "bulk-insert <amount-of-movies>"            << "\t\t\t"       << "Insert multiple movies" << endl;
+            cout << "\t" << "add"                                       << "\t\t\t\t\t\t" << "Insert a single movie" << endl;
+            cout << "\t" << "bulk-add <amount-of-movies>"               << "\t\t\t"       << "Insert multiple movies" << endl;
             cout << "\t" << "list"                                      << "\t\t\t\t\t\t" << "List all movies" <<  endl;
             cout << "\t" << "search <movie-name>"                       << "\t\t\t\t"     << "Search a single movie by name" << endl;
             cout << "\t" << "best"                                      << "\t\t\t\t\t\t" << "Find the movie with highest rating" << endl;
             cout << "\t" << "rename <old-name> <new-name>"              << "\t\t\t"       << "Rename a movie" << endl;
             cout << "\t" << "update-production <name> <new-production>" << "\t"           << "Update a movie production" << endl;
             cout << "\t" << "update-rating <name> <new-rating>"         << "\t\t"         << "Update a movie rating" << endl;
-            cout << "\t" << "delete <movie-name>"                       << "\t\t\t\t"     << "Remove a movie" << endl;
+            cout << "\t" << "remove <movie-name>"                       << "\t\t\t\t"     << "Remove a movie" << endl;
             cout << endl;
             return 0;
         }

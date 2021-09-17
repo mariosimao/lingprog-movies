@@ -88,7 +88,7 @@ Movie* Catalog::operator()(string movieName)
 
 Movie* Catalog::operator()(string movieName, string newProduction)
 {
-    Movie* movie = operator()(movieName);
+    Movie* movie = this->operator()(movieName);
     if (movie == NULL) {
         return NULL;
     }
@@ -100,7 +100,7 @@ Movie* Catalog::operator()(string movieName, string newProduction)
 
 Movie* Catalog::operator()(string movieName, double newRating)
 {
-    Movie* movie = operator()(movieName);
+    Movie* movie = this->operator()(movieName);
     if (movie == NULL) {
         return NULL;
     }

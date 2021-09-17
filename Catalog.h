@@ -25,6 +25,22 @@ struct Movie {
     {
         return name > movie.name;
     }
+
+    friend ostream& operator<<(ostream& out, const Movie& movie)
+    {
+        out << movie.name << endl;
+        out << movie.production << endl;
+        out << movie.rating << endl;
+
+        return out;
+    }
+
+    friend istream& operator>>(istream& input, Movie& movie)
+    {
+        input >> movie.name;
+
+        return input;
+    }
 };
 
 class Catalog

@@ -184,6 +184,31 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, catalog.toCsv());
                 break;
             }
+            case 3: {
+                if (argc < 4) {
+                    throw runtime_error("Missing amount of movies to be inserted");
+                }
+
+                int amount;
+                try {
+                    amount = stoi(argv[3]);
+                } catch(const std::exception& e) {
+                    throw runtime_error("Amount of movies must be a number.");
+                }
+
+                Catalog catalog = parseCsv(filename);
+
+                vector<Movie> movies;
+                for (int i = 0; i < amount; i++) {
+                    Movie movie;
+                    cin >> movie;
+                    movies.push_back(movie);
+                }
+
+                catalog += movies;
+                rewriteFile(filename, catalog.toCsv());
+                break;
+            }
             default: {
                 break;
             }

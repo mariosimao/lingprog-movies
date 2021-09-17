@@ -36,7 +36,8 @@ class Catalog
         Catalog(size_t catalogSize);
         void operator+=(Movie movie);
         void operator+=(vector<Movie> movies);
-        void operator-=(Movie movie);
+        /** Remove movie */
+        void operator-=(string movieName);
         Movie* operator()(string movieName);
         Movie* operator()(string movieName, string newProduction);
         Movie* operator()(string movieName, double newRating);

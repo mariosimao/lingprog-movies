@@ -36,10 +36,10 @@ void Catalog::operator+=(vector<Movie> movies)
     sort(_movies.begin(), _movies.end());
 }
 
-void Catalog::operator-=(Movie deletedMovie)
+void Catalog::operator-=(const string deletedMovie)
 {
     for (auto it = _movies.begin(); it != _movies.end(); it++) {
-        if (deletedMovie == *it) {
+        if (deletedMovie == it->name) {
             _movies.erase(it);
             break;
         }

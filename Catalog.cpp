@@ -148,10 +148,11 @@ Movie* Catalog::operator()(string movieName, double newRating)
 
 ostream& operator<<(ostream& out, const Catalog& catalog)
 {
+    int i = 0;
     for (auto movie: catalog._movies) {
-        out << movie.name << "\n";
+        out << ++i << ". ";
+        out << movie.name << endl;
     }
 
     return out;
 }
-

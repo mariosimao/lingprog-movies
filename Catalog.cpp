@@ -6,9 +6,9 @@
 
 using namespace std;
 
-void checkMovieRegistered(string movieName, Catalog* catalog)
+void checkMovieRegistered(string movieName, Catalog catalog)
 {
-    bool movieRegistered = catalog->operator()(movieName) != NULL;
+    bool movieRegistered = catalog(movieName) != NULL;
     if (movieRegistered) {
         throw runtime_error("Movie \"" + movieName + "\" already registered.");
     }
@@ -34,7 +34,7 @@ size_t Catalog::moviesRegistered()
 
 Movie* Catalog::rename(string oldName, string newName)
 {
-    Movie* oldMovie = this->operator()(oldName);
+    Movie* oldMovie = (*this)(oldName);
     if (oldMovie == NULL) {
         return NULL;
     }
@@ -45,10 +45,10 @@ Movie* Catalog::rename(string oldName, string newName)
         oldMovie->rating
     };
 
-    this->operator-=(oldMovie->name);
-    this->operator+=(newMovie);
+    *this -= (oldMovie->name);
+    *this += (newMovie);
 
-    return this->operator()(newName);
+    return (*this)(newName);
 }
 
 Movie* Catalog::bestRatedMovie()
@@ -86,7 +86,7 @@ void Catalog::operator+=(Movie movie)
         throw runtime_error("Catalog already at maximum size.");
     }
 
-    checkMovieRegistered(movie.name, this);
+    checkMovieRegistered(movie.name, *this);
     checkMovieHasAllProperties(movie);
 
     _movies.push_back(movie);
@@ -102,7 +102,7 @@ void Catalog::operator+=(vector<Movie> movies)
     }
 
     for (size_t i = 0; i < movies.size(); i++) {
-        checkMovieRegistered(movies[i].name, this);
+        checkMovieRegistered(movies[i].name, *this);
         checkMovieHasAllProperties(movies[i]);
 
         for (size_t j = 0; j < movies.size(); j++) {
@@ -146,7 +146,7 @@ Movie* Catalog::operator()(string movieName)
 
 Movie* Catalog::operator()(string movieName, string newProduction)
 {
-    Movie* movie = this->operator()(movieName);
+    Movie* movie = (*this)(movieName);
     if (movie == NULL) {
         return NULL;
     }
@@ -158,7 +158,7 @@ Movie* Catalog::operator()(string movieName, string newProduction)
 
 Movie* Catalog::operator()(string movieName, double newRating)
 {
-    Movie* movie = this->operator()(movieName);
+    Movie* movie = (*this)(movieName);
     if (movie == NULL) {
         return NULL;
     }

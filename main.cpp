@@ -233,6 +233,14 @@ int main(int argc, char const *argv[])
                 cout << *movie;
                 break;
             }
+            case 6: {
+                Catalog catalog = parseCsv(filename);
+                Movie* movie = catalog.bestRatedMovie();
+
+                cout << "Movie with highest rating:" << endl;
+                cout << *movie;
+                break;
+            }
             default: {
                 break;
             }

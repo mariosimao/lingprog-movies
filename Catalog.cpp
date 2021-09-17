@@ -29,6 +29,26 @@ size_t Catalog::moviesRegistered()
 {
     return this->_movies.size();
 }
+
+Movie* Catalog::rename(string oldName, string newName)
+{
+    Movie* oldMovie = this->operator()(oldName);
+    if (oldMovie == NULL) {
+        return NULL;
+    }
+
+    Movie newMovie {
+        newName,
+        oldMovie->production,
+        oldMovie->rating
+    };
+
+    this->operator-=(oldMovie->name);
+    this->operator+=(newMovie);
+
+    return this->operator()(newName);
+}
+
 }
 
 void Catalog::operator+=(Movie movie)

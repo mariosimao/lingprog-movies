@@ -52,6 +52,9 @@ class Catalog
         size_t _catalogSize;
     public:
         Catalog(size_t catalogSize);
+        /** Counts how many movies have been registered */
+        size_t moviesRegistered();
+        Movie* rename(string oldName, string newName);
         /** Add movie */
         void operator+=(Movie movie);
         /** Add multiple movies */

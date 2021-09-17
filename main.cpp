@@ -180,7 +180,8 @@ int main(int argc, char const *argv[])
 
         return 0;
     } catch(const std::exception& e) {
-        std::cerr << e.what() << endl;
+        cout << endl;
+        cerr << "\u001b[31m[ERROR] \u001b[0m" << e.what() << endl;
         return 1;
     }
 }

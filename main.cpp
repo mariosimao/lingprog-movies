@@ -158,6 +158,10 @@ int main(int argc, char const *argv[])
         string catalogName = args[1];
         string filename = catalogName + ".csv";
         string command = args[2];
+
+        if (!commands.count(command)) {
+            throw runtime_error("Command not found. Use 'catalog help' for usage information.");
+        }
         int commandKey = commands.at(command);
         switch (commandKey) {
             case 1: {
@@ -310,9 +314,6 @@ int main(int argc, char const *argv[])
                 catalog -= name;
 
                 rewriteFile(filename, catalog.toCsv());
-            }
-            default: {
-                break;
             }
         }
 

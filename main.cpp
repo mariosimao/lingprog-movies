@@ -40,6 +40,24 @@ vector<vector<string>> readCsv(string filename)
     return result;
 }
 
+void rewriteFile(string filename, string content)
+{
+    fstream file;
+    file.open(filename, fstream::in | fstream::out | fstream::trunc);
+
+    if (!file.is_open()) {
+        throw runtime_error("Could not open catalog file '" + filename + "'");
+    }
+
+    if (!file.good()) {
+        throw runtime_error("Could not read catalog file '" + filename + "'");
+    }
+
+    file << content;
+
+    file.close();
+}
+
 bool isDouble(string numberString)
 {
     istringstream iss(numberString);
@@ -137,14 +155,27 @@ int main(int argc, char const *argv[])
             throw runtime_error("Missing argument. Use 'catalog help' for usage information.");
         }
 
-        string filename = args[1] + ".csv";
+        string catalogName = args[1];
+        string filename = catalogName + ".csv";
         string command = args[2];
         int commandKey = commands.at(command);
         switch (commandKey) {
-            case 1:
-                // do something
-            default:
+            case 1: {
+                if (argc < 4) {
+                    throw runtime_error("Missing catalog size.");
+                }
+
+                size_t size = stoi(args[3]);
+                Catalog catalog(catalogName, size);
+
+                string content = catalog.toCsv();
+
+                rewriteFile(filename, content);
                 break;
+            }
+            default: {
+                break;
+            }
         }
 
         return 0;

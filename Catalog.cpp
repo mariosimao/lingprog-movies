@@ -97,12 +97,22 @@ void Catalog::operator+=(vector<Movie> movies)
 {
     size_t newSize = movies.size() + this->moviesRegistered();
     if (newSize > this->_catalogSize) {
-        throw runtime_error("Catalog already at maximum size.");
+        throw runtime_error("Additions will extrapolate catalog size.");
     }
 
-    for (auto movie: movies) {
-        checkMovieRegistered(movie.name, this);
-        checkMovieHasAllProperties(movie);
+    for (size_t i = 0; i < movies.size(); i++) {
+        checkMovieRegistered(movies[i].name, this);
+        checkMovieHasAllProperties(movies[i]);
+
+        for (size_t j = 0; j < movies.size(); j++) {
+            if (i == j) {
+                continue;
+            }
+
+            if (movies[i] == movies[j]) {
+                throw runtime_error("Duplicated movies are not allowed.");
+            }
+        }
     }
 
     _movies.insert(_movies.end(), movies.begin(), movies.end());

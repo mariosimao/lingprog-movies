@@ -33,9 +33,7 @@ struct Movie {
 
     friend ostream& operator<<(ostream& out, const Movie& movie)
     {
-        out << movie.name << endl;
-        out << movie.production << endl;
-        out << movie.rating << endl;
+        out << movie.name << " - " << movie.production << " - " << movie.rating << endl;
 
         return out;
     }

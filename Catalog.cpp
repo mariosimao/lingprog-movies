@@ -172,7 +172,7 @@ ostream& operator<<(ostream& out, const Catalog& catalog)
     int i = 0;
     for (auto movie: catalog._movies) {
         out << ++i << ". ";
-        out << movie.name << endl;
+        out << movie;
     }
 
     return out;

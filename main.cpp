@@ -220,6 +220,19 @@ int main(int argc, char const *argv[])
                 cout << catalog;
                 break;
             }
+            case 5: {
+                if (argc < 4) {
+                    throw runtime_error("Missing movie name.");
+                }
+
+                string movieName = args[3];
+
+                Catalog catalog = parseCsv(filename);
+
+                Movie* movie = catalog(movieName);
+                cout << *movie;
+                break;
+            }
             default: {
                 break;
             }
@@ -227,7 +240,6 @@ int main(int argc, char const *argv[])
 
         return 0;
     } catch(const std::exception& e) {
-        cout << endl;
         cerr << "\u001b[31m[ERROR] \u001b[0m" << e.what() << endl;
         return 1;
     }

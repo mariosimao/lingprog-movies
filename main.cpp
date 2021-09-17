@@ -299,6 +299,18 @@ int main(int argc, char const *argv[])
 
                 rewriteFile(filename, catalog.toCsv());
             }
+            case 10: {
+                if (argc < 4) {
+                    throw runtime_error("Missing movie name.");
+                }
+
+                string name = args[3];
+                Catalog catalog = parseCsv(filename);
+
+                catalog -= name;
+
+                rewriteFile(filename, catalog.toCsv());
+            }
             default: {
                 break;
             }

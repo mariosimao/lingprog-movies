@@ -126,11 +126,11 @@ void Catalog::operator-=(const string deletedMovie)
     for (auto it = _movies.begin(); it != _movies.end(); it++) {
         if (deletedMovie == it->name) {
             _movies.erase(it);
-            break;
+            return;
         }
     }
 
-    return;
+    throw runtime_error("Movie not found.");
 }
 
 Movie* Catalog::operator()(string movieName)

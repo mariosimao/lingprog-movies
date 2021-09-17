@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <limits>
 #include "Catalog.h"
 
 using namespace std;
@@ -56,12 +57,12 @@ Movie* Catalog::bestRatedMovie()
         return NULL;
     }
 
-    Movie* bestRatedMovie = &this->_movies[0];
-    double highestRatring = bestRatedMovie->rating;
-    for (auto movie: this->_movies) {
-        if (movie > highestRatring) {
-            highestRatring = movie.rating;
-            bestRatedMovie = &movie;
+    Movie* bestRatedMovie;
+    double highestRatring = - numeric_limits<double>::max();
+    for (auto it = _movies.begin(); it != _movies.end(); it++) {
+        if (*it > highestRatring) {
+            highestRatring = it->rating;
+            bestRatedMovie = it.base();
         }
     }
 

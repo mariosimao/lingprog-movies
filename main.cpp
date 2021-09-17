@@ -165,7 +165,12 @@ int main(int argc, char const *argv[])
                     throw runtime_error("Missing catalog size.");
                 }
 
-                size_t size = stoi(args[3]);
+                size_t size;
+                try {
+                    size = stoi(args[3]);
+                } catch(const std::exception& e) {
+                    throw runtime_error("Catalog size must be a number.");
+                }
                 Catalog catalog(catalogName, size);
 
                 string content = catalog.toCsv();

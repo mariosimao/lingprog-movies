@@ -49,6 +49,7 @@ class Catalog
     friend ostream& operator<<(ostream& out, const Catalog& catalog);
     private:
         vector<Movie> _movies;
+        size_t _catalogSize;
     public:
         Catalog(size_t catalogSize);
         /** Add movie */

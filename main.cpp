@@ -173,6 +173,17 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, content);
                 break;
             }
+            case 2: {
+                Catalog catalog = parseCsv(filename);
+
+                Movie movie;
+                cin >> movie;
+
+                catalog += movie;
+
+                rewriteFile(filename, catalog.toCsv());
+                break;
+            }
             default: {
                 break;
             }

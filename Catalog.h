@@ -42,7 +42,25 @@ struct Movie {
 
     friend istream& operator>>(istream& input, Movie& movie)
     {
-        input >> movie.name;
+        string name, production, rating;
+
+        cout << "Add movie to catalog" << endl;
+
+        cout << "* Name: ";
+        getline(input, name);
+        movie.name = name;
+
+        cout << "* Production: ";
+        getline(input, production);
+        movie.production = production;
+
+        cout << "* Rating: ";
+        getline(input, rating);
+        try {
+            movie.rating = stod(rating);
+        } catch(const std::exception& e) {
+            throw runtime_error("Rating must be a number.");
+        }
 
         return input;
     }

@@ -3,66 +3,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Movie.h"
 
 using namespace std;
-
-struct Movie {
-    string name;
-    string production;
-    double rating;
-
-    bool operator==(const Movie& movie) const
-    {
-        return name == movie.name;
-    }
-
-    bool operator<(const Movie& movie) const
-    {
-        return name < movie.name;
-    }
-
-    bool operator>(const Movie& movie) const
-    {
-        return name > movie.name;
-    }
-
-    bool operator>(double comparedRating) const
-    {
-        return rating > comparedRating;
-    }
-
-    friend ostream& operator<<(ostream& out, const Movie& movie)
-    {
-        out << movie.name << " - " << movie.production << " - " << movie.rating << endl;
-
-        return out;
-    }
-
-    friend istream& operator>>(istream& input, Movie& movie)
-    {
-        string name, production, rating;
-
-        cout << "Add movie to catalog" << endl;
-
-        cout << "* Name: ";
-        getline(input, name);
-        movie.name = name;
-
-        cout << "* Production: ";
-        getline(input, production);
-        movie.production = production;
-
-        cout << "* Rating: ";
-        getline(input, rating);
-        try {
-            movie.rating = stod(rating);
-        } catch(const std::exception& e) {
-            throw runtime_error("Rating must be a number.");
-        }
-
-        return input;
-    }
-};
 
 class Catalog
 {

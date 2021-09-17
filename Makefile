@@ -1,7 +1,7 @@
 LD = g++
-LFLAGS = -Wall
+LFLAGS = -std=c++11 -Wall
 
-INCLUDES = main.cpp Catalog.cpp
+INCLUDES = main.cpp Catalog.cpp Movie.cpp
 
 EXECUTABLE = catalog
 

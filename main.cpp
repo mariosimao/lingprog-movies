@@ -164,7 +164,7 @@ int main(int argc, char const *argv[])
         }
         int commandKey = commands.at(command);
         switch (commandKey) {
-            case 1: {
+            case 1: { // Create catalog
                 if (argc < 4) {
                     throw runtime_error("Missing catalog size.");
                 }
@@ -182,7 +182,7 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, content);
                 break;
             }
-            case 2: {
+            case 2: { // Add one movie
                 Catalog catalog = parseCsv(filename);
 
                 Movie movie;
@@ -193,7 +193,7 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, catalog.toCsv());
                 break;
             }
-            case 3: {
+            case 3: { // Add multiple movies
                 if (argc < 4) {
                     throw runtime_error("Missing amount of movies to be inserted");
                 }
@@ -218,13 +218,13 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, catalog.toCsv());
                 break;
             }
-            case 4: {
+            case 4: { // Print catalog
                 Catalog catalog = parseCsv(filename);
 
                 cout << catalog;
                 break;
             }
-            case 5: {
+            case 5: { // Search movie
                 if (argc < 4) {
                     throw runtime_error("Missing movie name.");
                 }
@@ -241,7 +241,7 @@ int main(int argc, char const *argv[])
                 cout << *movie;
                 break;
             }
-            case 6: {
+            case 6: { // Print movie with highest rating
                 Catalog catalog = parseCsv(filename);
                 Movie* movie = catalog.bestRatedMovie();
 
@@ -249,7 +249,7 @@ int main(int argc, char const *argv[])
                 cout << *movie;
                 break;
             }
-            case 7: {
+            case 7: { // Rename movie
                 if (argc < 5) {
                     throw runtime_error("Missing arguments. Old and new name should be provided");
                 }
@@ -268,7 +268,7 @@ int main(int argc, char const *argv[])
                 cout << "Movie successfully renamed." << endl;
                 break;
             }
-            case 8: {
+            case 8: { // Update movie production
                 if (argc < 5) {
                     throw runtime_error("Missing arguments. Movie name and new production should be provided.");
                 }
@@ -286,7 +286,7 @@ int main(int argc, char const *argv[])
                 rewriteFile(filename, catalog.toCsv());
                 break;
             }
-            case 9: {
+            case 9: { // Update movie rating
                 if (argc < 5) {
                     throw runtime_error("Missing arguments. Movie name and new rating should be provided.");
                 }
@@ -307,7 +307,7 @@ int main(int argc, char const *argv[])
 
                 rewriteFile(filename, catalog.toCsv());
             }
-            case 10: {
+            case 10: { // Remove move
                 if (argc < 4) {
                     throw runtime_error("Missing movie name.");
                 }

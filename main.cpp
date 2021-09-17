@@ -196,7 +196,7 @@ int main(int argc, char const *argv[])
 
                 int amount;
                 try {
-                    amount = stoi(argv[3]);
+                    amount = stoi(args[3]);
                 } catch(const std::exception& e) {
                     throw runtime_error("Amount of movies must be a number.");
                 }
@@ -271,6 +271,28 @@ int main(int argc, char const *argv[])
                 Catalog catalog = parseCsv(filename);
 
                 Movie* result = catalog(name, newProduction);
+                if (result == NULL) {
+                    throw runtime_error("Movie not found.");
+                }
+
+                rewriteFile(filename, catalog.toCsv());
+                break;
+            }
+            case 9: {
+                if (argc < 5) {
+                    throw runtime_error("Missing arguments. Movie name and new rating should be provided.");
+                }
+
+                string name = args[3];
+                double newRating;
+                try {
+                    newRating = stod(args[4]);
+                } catch(const std::exception& e) {
+                    throw runtime_error("New rating should be a valid number.");
+                }
+                Catalog catalog = parseCsv(filename);
+
+                Movie* result = catalog(name, newRating);
                 if (result == NULL) {
                     throw runtime_error("Movie not found.");
                 }

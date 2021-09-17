@@ -29,17 +29,23 @@ struct Movie {
 
 class Catalog
 {
+    /** List all movies */
     friend ostream& operator<<(ostream& out, const Catalog& catalog);
     private:
         vector<Movie> _movies;
     public:
         Catalog(size_t catalogSize);
+        /** Add movie */
         void operator+=(Movie movie);
+        /** Add multiple movies */
         void operator+=(vector<Movie> movies);
         /** Remove movie */
         void operator-=(string movieName);
+        /** Search movie by name */
         Movie* operator()(string movieName);
+        /** Update movie production */
         Movie* operator()(string movieName, string newProduction);
+        /** Update movie rating */
         Movie* operator()(string movieName, double newRating);
 };
 #endif
